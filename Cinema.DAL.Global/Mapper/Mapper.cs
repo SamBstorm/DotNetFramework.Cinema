@@ -39,5 +39,38 @@ namespace Cinema.DAL.Global.Mapper
                 role = (string)reader[nameof(User.role)]
             };
         }
+
+        public static Actor ToActor(this IDataRecord reader)
+        {
+            if (reader == null) return null;
+            return new Actor
+            {
+                id = (int)reader[nameof(Actor.id)],
+                first_name = (string)reader[nameof(Actor.first_name)],
+                last_name = (string)reader[nameof(Actor.last_name)],
+                birth_date = (reader[nameof(Actor.birth_date)] == DBNull.Value) ? null : (DateTime?)reader[nameof(Actor.birth_date)],
+                image_uri = (reader[nameof(Actor.image_uri)] == DBNull.Value) ? null : (string)reader[nameof(Actor.image_uri)]
+            };
+        }
+        public static Category ToCategory(this IDataRecord reader)
+        {
+            if (reader == null) return null;
+            return new Category
+            {
+                id = (int)reader[nameof(Category.id)],
+                name = (string)reader[nameof(Category.name)],
+                description = (reader[nameof(Category.description)] == DBNull.Value) ? null : (string)reader[nameof(Category.description)]
+            };
+        }
+        public static Cast ToCast(this IDataRecord reader)
+        {
+            if (reader == null) return null;
+            return new Cast
+            {
+                movie_id = (int)reader[nameof(Cast.movie_id)],
+                actor_id = (int)reader[nameof(Cast.actor_id)],
+                character_name = (reader[nameof(Cast.character_name)] == DBNull.Value) ? null : (string)reader[nameof(Cast.character_name)]
+            };
+        }
     }
 }
