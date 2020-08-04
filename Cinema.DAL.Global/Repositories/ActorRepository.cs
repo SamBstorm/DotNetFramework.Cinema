@@ -43,8 +43,8 @@ namespace Cinema.DAL.Global.Repositories
             Command command = new Command("INSERT INTO Actor(first_name,last_name, birth_date, image_uri) OUTPUT INSERTED.id VALUES(@fn,@ln,@bd,@iu)");
             command.AddParameter("fn", entity.first_name);
             command.AddParameter("ln", entity.last_name);
-            command.AddParameter("bd", entity.birth_date);
-            command.AddParameter("iu", entity.image_uri);
+            command.AddParameter("bd", (object)entity.birth_date ?? DBNull.Value);
+            command.AddParameter("iu", (object)entity.image_uri ?? DBNull.Value);
             return (int)_connection.ExecuteScalar(command);
         }
 
@@ -54,8 +54,8 @@ namespace Cinema.DAL.Global.Repositories
             command.AddParameter("id", id);
             command.AddParameter("fn", entity.first_name);
             command.AddParameter("ln", entity.last_name);
-            command.AddParameter("bd", entity.birth_date);
-            command.AddParameter("iu", entity.image_uri);
+            command.AddParameter("bd", (object)entity.birth_date ?? DBNull.Value);
+            command.AddParameter("iu", (object)entity.image_uri ?? DBNull.Value);
             return _connection.ExecuteNonQuery(command) > 0;
         }
     }
