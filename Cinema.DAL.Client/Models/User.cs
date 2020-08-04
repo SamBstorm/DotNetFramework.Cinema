@@ -31,5 +31,18 @@ namespace Cinema.DAL.Client.Models
             Salt = entity.salt;
             Role = (entity.role == "SIMPLE_USER")? UserRole.SIMPLE_USER : (entity.role == "ADMIN")? UserRole.ADMIN : UserRole.NOT_ASSIGNED;
         }
+
+        public User(int id, string login, string email, string first_name, string last_name, string password, string salt, UserRole role)
+        {
+            Id = id;
+            Login = login;
+            Email = email;
+            FirstName = first_name;
+            LastName = last_name;
+            Password = password;
+            Salt = salt;
+            Role = role;
+        }
+
     }
 }

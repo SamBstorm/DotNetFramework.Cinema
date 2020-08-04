@@ -1,0 +1,7 @@
+﻿
+CREATE FUNCTION dbo.SF_HashPassword (@password VARCHAR(32), @salt VARCHAR(255))
+RETURNS VARBINARY(64)
+AS
+BEGIN
+    RETURN HASHBYTES('SHA2_512',CONCAT(@password,@salt))
+END

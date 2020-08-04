@@ -12,16 +12,26 @@ namespace Conso.DAL.Global
     {
         static void Main(string[] args)
         {
-            IMovieRepository<int,Movie> repo = new MovieRepository();
+            IMovieRepository<int, Movie> movieRepo = new MovieRepository();
 
-            Movie nemo = repo.Get(1);
-            nemo.title = "Le monde de Némo";
-            repo.Update(1, nemo);
+            Movie m = movieRepo.Get(1);
+            Console.WriteLine($"{m.title}");
 
-            foreach(Movie movie in repo.Get())
-            {
-                Console.WriteLine($"{movie.id} : {movie.title}");
-            }
+            IUserRepository<int, User> repo = new UserRepository();
+
+            repo.Delete(6);             //Utilisé pour garantir une unicité dans la table User - Attention, s'auto-incrémente...
+
+            int id = repo.Insert(new User { login = "Sam", email = "sam@fait.rire", first_name = "Samuel", last_name = "Legrain", password = "test1234=", salt = "toto", role = "ADMIN" });
+            Console.WriteLine($"{id}");
+
+            User u = repo.Get(id);      //Attention, le password est remplacé par des "********"
+
+            Console.WriteLine(u.first_name);
+
+            u.password = "test1234=";   //Ne pas oublier de tester avec le bon password...
+            u = repo.Check(u);
+
+            Console.WriteLine(u.id);
 
             Console.ReadLine();
         }
