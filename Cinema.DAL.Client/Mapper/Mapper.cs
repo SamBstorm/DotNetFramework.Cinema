@@ -40,5 +40,24 @@ namespace Cinema.DAL.Client.Mapper
             if (entity == null) return null;
             return new C.Category(entity);
         }
+        public static G.User ToGlobal(this C.User entity)
+        {
+            if (entity == null) return null;
+            return new G.User {
+                id = entity.Id,
+                login = entity.Login,
+                email = entity.Email,
+                first_name = entity.FirstName,
+                last_name = entity.LastName,
+                password = entity.Password,
+                salt = entity.Salt,
+                role = entity.Role.ToString()   //(entity.Role == C.UserRole.ADMIN) ? "ADMIN" : (entity.Role == C.UserRole.SIMPLE_USER) ? "SIMPLE_USER" : "NOT_ASSIGNED"
+            };
+        }
+        public static C.User ToClient(this G.User entity)
+        {
+            if (entity == null) return null;
+            return new C.User(entity);
+        }
     }
 }
