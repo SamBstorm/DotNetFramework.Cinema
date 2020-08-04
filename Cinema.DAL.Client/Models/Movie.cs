@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Cinema.DAL.Client.Services;
+using Cinema.DAL.Global.Repositories;
 
 namespace Cinema.DAL.Client.Models
 {
@@ -16,8 +18,19 @@ namespace Cinema.DAL.Client.Models
         public int? ReleaseYear { get; set; }
         public string PosterURI { get; set; }
         private int? CategoryId { get; set; }
-
-        public C.Category Category { get; set; } //Service de Category
+        private C.Category _category;
+        public C.Category Category { get
+            {
+                if (_category is null) {
+                    if (!(this.CategoryId is null))
+                    {
+                        ICategoryRepository<int, C.Category> service = new CategoryService();
+                        _category = service.Get((int)this.CategoryId);
+                    }
+                    else _category = null;
+                }
+                return _category;  }
+            set { CategoryId = value.Id; } } //Service de Category
 
         public Movie(G.Movie entity)
         {

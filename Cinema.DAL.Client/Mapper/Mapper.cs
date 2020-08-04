@@ -26,5 +26,19 @@ namespace Cinema.DAL.Client.Mapper
             if (entity == null) return null;
             return new C.Movie(entity);
         }
+        public static G.Category ToGlobal(this C.Category entity)
+        {
+            if (entity == null) return null;
+            return new G.Category { 
+                id = entity.Id,
+                name = entity.Name,
+                description = entity.Description
+            };
+        }
+        public static C.Category ToClient(this G.Category entity)
+        {
+            if (entity == null) return null;
+            return new C.Category(entity);
+        }
     }
 }
