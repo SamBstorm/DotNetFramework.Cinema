@@ -14,13 +14,14 @@ namespace Cinema.ASP.Controllers
     public class AuthController : Controller
     {
         // GET: Auth
+        [AnonymousRequired]
         public ActionResult Login()
         {
             LoginForm form = new LoginForm();
             return View(form);
         }
-
         [HttpPost]
+        [AnonymousRequired]
         public ActionResult Login(LoginForm form)
         {
             if (ModelState.IsValid)
@@ -36,17 +37,17 @@ namespace Cinema.ASP.Controllers
             }
             return View(form);
         }
-
+        [AnonymousRequired]
         public ActionResult Register()
         {
             ViewBag.Session = UserSession.User?.Email;
             return View();
         }
-
+        [AuthRequired]
         public ActionResult Logout()
         {
             Session.Abandon();
-            return RedirectToAction("Register");
+            return RedirectToAction("Login");
         }
     }
 }

@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Cinema.ASP.Areas.Admin.Models.User;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.Security;
 using A = Cinema.ASP.Models;
 using D = Cinema.DAL.Client.Models;
 
@@ -26,6 +28,12 @@ namespace Cinema.ASP.Mapper
                 entity.Password,
                 entity.Salt,
                 entity.Role);
+        }
+
+        public static UserListItem ToListItem(this A.User entity)
+        {
+            if (entity is null) return null;
+            return new UserListItem(entity);
         }
     }
 }
